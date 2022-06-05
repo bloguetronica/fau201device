@@ -41,7 +41,7 @@ public:
     static const int ERROR_INIT = CP2130::ERROR_INIT;            // Returned by open() in case of a libusb initialization failure
     static const int ERROR_NOT_FOUND = CP2130::ERROR_NOT_FOUND;  // Returned by open() if the device was not found
     static const int ERROR_BUSY = CP2130::ERROR_BUSY;            // Returned by open() if the device is already in use
-    
+
     // Limits applicable to setVoltage()
     static constexpr float VOLTAGE_MIN = 0;       // Minimum voltage
     static constexpr float VOLTAGE_MAX = 4.095;   // Maximum voltage
