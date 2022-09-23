@@ -1,4 +1,4 @@
-/* FAU201 device class - Version 1.0.0
+/* FAU201 device class - Version 1.0.1
    Requires CP2130 class version 1.1.0 or later
    Copyright (c) 2022 Samuel Lourenço
 
@@ -110,6 +110,7 @@ void FAU201Device::setup(int &errcnt, std::string &errstr)
     cp2130_.configureSPIMode(0, mode, errcnt, errstr);  // Configure SPI mode for channel 0, using the above settings
     cp2130_.disableSPIDelays(0, errcnt, errstr);  // Disable all SPI delays for channel 0
     cp2130_.selectCS(0, errcnt, errstr);  // Enable the chip select corresponding to channel 0, and disable any others
+    usleep(100);  // Wait 100us, in order to prevent possible errors after enabling the chip select (workaround implemented in version 1.0.1)
     std::vector<uint8_t> config = {0x70, 0x00, 0x00};  // Use external voltage reference
     cp2130_.spiWrite(config, EPOUT, errcnt, errstr);  // Send the the configuration above to the LTC2640 DAC
     usleep(100);  // Wait 100us, in order to prevent possible errors while disabling the chip select (workaround)
@@ -124,6 +125,7 @@ void FAU201Device::setVoltage(float voltage, int &errcnt, std::string &errstr)
         errstr += "In setVoltage(): Voltage must be between 0 and 4.095.\n";  // Program logic error
     } else {
         cp2130_.selectCS(0, errcnt, errstr);  // Enable the chip select corresponding to channel 0, and disable any others
+        usleep(100);  // Wait 100us, in order to prevent possible errors after enabling the chip select (workaround implemented in version 1.0.1)
         uint16_t voltageCode = static_cast<uint16_t>(voltage * 1000 + 0.5);
         std::vector<uint8_t> set = {
             0x30,                                    // Input and DAC registers updated to the given value
