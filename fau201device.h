@@ -1,6 +1,6 @@
-/* FAU201 device class - Version 1.0.1
+/* FAU201 device class - Version 1.0.2
    Requires CP2130 class version 1.1.0 or later
-   Copyright (c) 2022 Samuel Lourenço
+   Copyright (c) 2022-2026 Samuel Lourenço
 
    This library is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published by
@@ -46,7 +46,7 @@ public:
     static constexpr float VOLTAGE_MIN = 0;       // Minimum voltage
     static constexpr float VOLTAGE_MAX = 4.095;   // Maximum voltage
 
-    FAU201Device();
+    explicit FAU201Device();  // Explicit since version 1.0.2
 
     bool disconnected() const;
     bool isOpen() const;
